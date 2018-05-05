@@ -8,7 +8,7 @@ import pylib
 type HumanFriendlyByteUnits = tuple[
   bite: int64, kilo: int64, mega: int64, giga: int64,
   tera: int64, peta: int64, exa: int64, zetta: int64]
-type HumanBytes = tuple[human: string, auto: string,
+type HumanBytes = tuple[human: string, short: string,
                         units: HumanFriendlyByteUnits]
 
 
@@ -49,48 +49,48 @@ proc bytes2human*(integer_bytes: int64): HumanBytes =
 
     # Build a human friendly bytes string with frequent bytes units.
     var bytes_parts: seq[string]
-    var human_bytes_auto = ""
+    var human_bytes_short = ""
     var this_byte_unit = ""
     if zetta:
         this_byte_unit = fmt"{zetta} Zettabytes"
-        if not human_bytes_auto:
-            human_bytes_auto = this_byte_unit
+        if not human_bytes_short:
+            human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
     if exa:
         this_byte_unit = fmt"{exa} Exabytes"
-        if not human_bytes_auto:
-            human_bytes_auto = this_byte_unit
+        if not human_bytes_short:
+            human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
     if peta:
         this_byte_unit = fmt"{peta} Petabytes"
-        if not human_bytes_auto:
-            human_bytes_auto = this_byte_unit
+        if not human_bytes_short:
+            human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
     if tera:
         this_byte_unit = fmt"{tera} Terabytes"
-        if not human_bytes_auto:
-            human_bytes_auto = this_byte_unit
+        if not human_bytes_short:
+            human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
     if giga:
         this_byte_unit = fmt"{giga} Gigabytes"
-        if not human_bytes_auto:
-            human_bytes_auto = this_byte_unit
+        if not human_bytes_short:
+            human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
     if mega:
         this_byte_unit = fmt"{mega} Megabytes"
-        if not human_bytes_auto:
-            human_bytes_auto = this_byte_unit
+        if not human_bytes_short:
+            human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
     if kilo:
         this_byte_unit = fmt"{kilo} Kilobytes"
-        if not human_bytes_auto:
-            human_bytes_auto = this_byte_unit
+        if not human_bytes_short:
+            human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
-    if not human_bytes_auto:
-        human_bytes_auto = fmt"{bite} Bytes"
+    if not human_bytes_short:
+        human_bytes_short = fmt"{bite} Bytes"
     bytes_parts.add(fmt"{bite} Bytes")
 
-    let r: HumanBytes = (human: " ".join(bytes_parts), auto: human_bytes_auto,
+    let r: HumanBytes = (human: " ".join(bytes_parts), short: human_bytes_short,
                          units: bytes_units)
     result = r
 
