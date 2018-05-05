@@ -11,10 +11,14 @@ with precision from Bytes to Yottabytes, and return a human friendly string repr
 
 ```nim
 >>> import bytes2human
-echo bytes2human(2398345659434540923)  # 2 Exabytes.
-(human: "2 Exabytes 2130 Petabytes 2181282 Terabytes 2233633454 Gigabytes 2287240657267 Megabytes 2342134433041544 Kilobytes 2398345659434540923 Bytes", auto: "2 Exabytes", units: (bite: 2398345659434540923, kilo: 2342134433041544, mega: 2287240657267, giga: 2233633454, tera: 2181282, peta: 2130, exa: 2, zetta: 0, yotta: 0))
->>> echo bytes2human(1)  # 1 Byte.
-(human: "1 Bytes", auto: "1 Bytes", units: (bite: 1, kilo: 0, mega: 0, giga: 0, tera: 0, peta: 0, exa: 0, zetta: 0, yotta: 0))
+>>> echo bytes2human(2398345659434540923)  # 2 Exabytes.
+(human: "2 Exabytes 82 Petabytes 162 Terabytes 686 Gigabytes 371 Megabytes 136 Kilobytes 891 Bytes", auto: "2 Exabytes", units: (bite: 891, kilo: 136, mega: 371, giga: 686, tera: 162, peta: 82, exa: 2, zetta: 0))
+>>> echo bytes2human(1027) # 1 Kilobytes.
+(human: "1 Kilobytes 3 Bytes", auto: "1 Kilobytes", units: (bite: 3, kilo: 1, mega: 0, giga: 0, tera: 0, peta: 0, exa: 0, zetta: 0))
+>>> echo bytes2human(0)  # 0 Byte.
+(human: "0 Bytes", auto: "0 Bytes", units: (bite: 0, kilo: 0, mega: 0, giga: 0, tera: 0, peta: 0, exa: 0, zetta: 0))
+>>> echo bytes2human(-666)  # Invalid!.
+Error: unhandled exception: 0 <= integer_bytes Invalid Negative value for integer_bytes!. [AssertionError]
 >>>
 ```
 
