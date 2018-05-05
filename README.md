@@ -12,11 +12,11 @@ with precision from Bytes to Yottabytes, and return a human friendly string repr
 ```nim
 >>> import bytes2human
 >>> echo bytes2human(2398345659434540923)  # 2 Exabytes.
-(human: "2 Exabytes 82 Petabytes 162 Terabytes 686 Gigabytes 371 Megabytes 136 Kilobytes 891 Bytes", auto: "2 Exabytes", units: (bite: 891, kilo: 136, mega: 371, giga: 686, tera: 162, peta: 82, exa: 2, zetta: 0))
+(human: "2 Exabytes 82 Petabytes 162 Terabytes 686 Gigabytes 371 Megabytes 136 Kilobytes 891 Bytes", short: "2 Exabytes", units: (bite: 891, kilo: 136, mega: 371, giga: 686, tera: 162, peta: 82, exa: 2, zetta: 0))
 >>> echo bytes2human(1027) # 1 Kilobytes.
-(human: "1 Kilobytes 3 Bytes", auto: "1 Kilobytes", units: (bite: 3, kilo: 1, mega: 0, giga: 0, tera: 0, peta: 0, exa: 0, zetta: 0))
+(human: "1 Kilobytes 3 Bytes", short: "1 Kilobytes", units: (bite: 3, kilo: 1, mega: 0, giga: 0, tera: 0, peta: 0, exa: 0, zetta: 0))
 >>> echo bytes2human(0)  # 0 Byte.
-(human: "0 Bytes", auto: "0 Bytes", units: (bite: 0, kilo: 0, mega: 0, giga: 0, tera: 0, peta: 0, exa: 0, zetta: 0))
+(human: "0 Bytes", short: "0 Bytes", units: (bite: 0, kilo: 0, mega: 0, giga: 0, tera: 0, peta: 0, exa: 0, zetta: 0))
 >>> echo bytes2human(-666)  # Invalid!.
 Error: unhandled exception: 0 <= integer_bytes Invalid Negative value for integer_bytes!. [AssertionError]
 >>>
