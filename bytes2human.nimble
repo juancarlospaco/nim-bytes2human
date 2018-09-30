@@ -9,5 +9,6 @@ bin           = @["bytes2human.nim"]
 
 # Dependencies
 
+
 requires "nim >= 0.19.0"
 requires "pylib"
