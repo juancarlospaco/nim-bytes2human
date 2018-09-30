@@ -1,25 +1,14 @@
-#!/usr/bin/nim c -r
+import strformat, json, pylib
 
-import strformat
-import json
-import pylib
-
-
-type HumanFriendlyByteUnits = tuple[
+type HumanFriendlyByteUnits* = tuple[
   bite: int64, kilo: int64, mega: int64, giga: int64,
-  tera: int64, peta: int64, exa: int64, zetta: int64]
-type HumanBytes = tuple[human: string, short: string,
-                        units: HumanFriendlyByteUnits]
+  tera: int64, peta: int64, exa: int64, zetta: int64]  ## Tuple of Human Friendly Byte Units.
+
+type HumanBytes* = tuple[human: string, short: string,
+                        units: HumanFriendlyByteUnits] ## Tuple of Human Friendly Byte Units as Strings.
 
 
-# proc divmod(a: int, b: int):     array[0..1, int]   = [int(a / b), int(a mod b)]
-# proc divmod(a: int8, b: int8):   array[0..1, int8]  = [int8(a / b), int8(a mod b)]
-# proc divmod(a: int16, b: int16): array[0..1, int16] = [int16(a / b), int16(a mod b)]
-# proc divmod(a: int32, b: int32): array[0..1, int32] = [int32(a / b), int32(a mod b)]
-proc divmod(a: int64, b: int64): array[0..1, int64] = [int64(a / b), int64(a mod b)]
-
-
-proc bytes2human*(integer_bytes: int64): HumanBytes =
+func bytes2human*(integer_bytes: int64): HumanBytes =
     ## Calculate Bytes, with precision from Bytes to Yottabytes.
     ## Calculate all Byte units from integer_bytes positive integer.
     assert integer_bytes >= 0, "Invalid Negative value for integer_bytes!."
@@ -95,7 +84,8 @@ proc bytes2human*(integer_bytes: int64): HumanBytes =
     result = r
 
 
-if is_main_module:
+runnableExamples:
   echo bytes2human(2398345659434540923)  # 2 Exabytes.
-  echo bytes2human(1027)                    # 1 Byte.
+  echo bytes2human(1027)                 # 1 Byte.
+  echo bytes2human(666)
   echo bytes2human(0)                    # 0 Byte.
