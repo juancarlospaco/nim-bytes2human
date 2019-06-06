@@ -1,4 +1,5 @@
-import strformat, json, pylib
+import strformat, json, strutils
+
 
 type HumanFriendlyByteUnits* = tuple[
   bite: int64, kilo: int64, mega: int64, giga: int64,
@@ -6,6 +7,10 @@ type HumanFriendlyByteUnits* = tuple[
 
 type HumanBytes* = tuple[human: string, short: string,
                         units: HumanFriendlyByteUnits] ## Tuple of Human Friendly Byte Units as Strings.
+
+
+func divmod(a, b: SomeInteger): array[0..1, int] {.inline.} =
+  [int(int(a) / int(b)), int(a mod b)]
 
 
 func bytes2human*(integer_bytes: int64): HumanBytes =
@@ -37,54 +42,55 @@ func bytes2human*(integer_bytes: int64): HumanBytes =
       tera: tera, peta: peta, exa: exa, zetta: zetta)
 
     # Build a human friendly bytes string with frequent bytes units.
-    var bytes_parts: seq[string]
+    var bytes_parts: seq[string] = @[""]
     var human_bytes_short = ""
     var this_byte_unit = ""
-    if zetta:
+    if zetta > 0:
         this_byte_unit = fmt"{zetta} Zettabytes"
-        if not human_bytes_short:
+        if not human_bytes_short.len.bool:
             human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
-    if exa:
+    if exa > 0:
         this_byte_unit = fmt"{exa} Exabytes"
-        if not human_bytes_short:
+        if not human_bytes_short.len.bool:
             human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
-    if peta:
+    if peta > 0:
         this_byte_unit = fmt"{peta} Petabytes"
-        if not human_bytes_short:
+        if not human_bytes_short.len.bool:
             human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
-    if tera:
+    if tera > 0:
         this_byte_unit = fmt"{tera} Terabytes"
-        if not human_bytes_short:
+        if not human_bytes_short.len.bool:
             human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
-    if giga:
+    if giga > 0:
         this_byte_unit = fmt"{giga} Gigabytes"
-        if not human_bytes_short:
+        if not human_bytes_short.len.bool:
             human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
-    if mega:
+    if mega > 0:
         this_byte_unit = fmt"{mega} Megabytes"
-        if not human_bytes_short:
+        if not human_bytes_short.len.bool:
             human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
-    if kilo:
+    if kilo > 0:
         this_byte_unit = fmt"{kilo} Kilobytes"
-        if not human_bytes_short:
+        if not human_bytes_short.len.bool:
             human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
-    if not human_bytes_short:
+    if not human_bytes_short.len.bool:
         human_bytes_short = fmt"{bite} Bytes"
     bytes_parts.add(fmt"{bite} Bytes")
 
-    let r: HumanBytes = (human: " ".join(bytes_parts), short: human_bytes_short,
+    let r: HumanBytes = (human: bytes_parts.join" ", short: human_bytes_short,
                          units: bytes_units)
     result = r
 
 
-runnableExamples:
+when isMainModule:
+  #runnableExamples:
   echo bytes2human(2398345659434540923)  # 2 Exabytes.
   echo bytes2human(1027)                 # 1 Byte.
   echo bytes2human(666)
