@@ -47,40 +47,40 @@ func bytes2human*(integer_bytes: int64): HumanBytes =
     var this_byte_unit = ""
     if zetta > 0:
         this_byte_unit = fmt"{zetta} Zettabytes"
-        if not human_bytes_short.len.bool:
+        if human_bytes_short.len == 0:
             human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
     if exa > 0:
         this_byte_unit = fmt"{exa} Exabytes"
-        if not human_bytes_short.len.bool:
+        if human_bytes_short.len == 0:
             human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
     if peta > 0:
         this_byte_unit = fmt"{peta} Petabytes"
-        if not human_bytes_short.len.bool:
+        if human_bytes_short.len == 0:
             human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
     if tera > 0:
         this_byte_unit = fmt"{tera} Terabytes"
-        if not human_bytes_short.len.bool:
+        if human_bytes_short.len == 0:
             human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
     if giga > 0:
         this_byte_unit = fmt"{giga} Gigabytes"
-        if not human_bytes_short.len.bool:
+        if human_bytes_short.len == 0:
             human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
     if mega > 0:
         this_byte_unit = fmt"{mega} Megabytes"
-        if not human_bytes_short.len.bool:
+        if human_bytes_short.len == 0:
             human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
     if kilo > 0:
         this_byte_unit = fmt"{kilo} Kilobytes"
-        if not human_bytes_short.len.bool:
+        if human_bytes_short.len == 0:
             human_bytes_short = this_byte_unit
         bytes_parts.add(this_byte_unit)
-    if not human_bytes_short.len.bool:
+    if human_bytes_short.len == 0:
         human_bytes_short = fmt"{bite} Bytes"
     bytes_parts.add(fmt"{bite} Bytes")
 
