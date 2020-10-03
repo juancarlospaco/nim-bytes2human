@@ -2,10 +2,9 @@
 
 Calculate all Byte units from integer bytes positive `int64`,
 with precision from Bytes to Yottabytes, and return a human friendly string representation.
-Works with `--gc:arc`, `--gc:orc`, `--panics:on`, `--experimental:strictFuncs`, C, C++, JavaScript.
-Uses `system.nim` only, does not import anything from stdlib.
 
-![screenshot](https://source.unsplash.com/wloRJGS6Y34/800x402 "Illustrative Photo by https://unsplash.com/@florian_perennes")
+- Works with `--gc:arc`, `--gc:orc`, `--panics:on`, `--experimental:strictFuncs`, C, C++, JavaScript.
+- Uses `system.nim` only, does not import anything from stdlib.
 
 
 # Use
