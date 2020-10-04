@@ -4,4 +4,4 @@ description = "Convert bytes to kilobytes, megabytes, gigabytes, etc."
 license     = "LGPLv3"
 srcDir      = "src"
 
-requires "nim >= 1.0.0"
+requires "nim >= 1.0.0"  # https://github.com/juancarlospaco/nim-bytes2human/issues/2#issue-714338524
