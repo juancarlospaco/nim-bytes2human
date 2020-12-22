@@ -10,6 +10,12 @@ template divmod(a, b: SomeInteger): array[2, int] =
   [int(int(a) / int(b)), int(a mod b)]
 
 
+template wordsToCap(wordCount: static[Positive]): static[int] =
+  ## Average length of English words is 6 (Wikipedia, Wolfram, Oxford, etc).
+  ## ((6 * 1.5) * wordCount) + (whitespace * wordCount)
+  (9 * wordCount) + wordCount  # Still better than a random guess.
+
+
 template abytes(stringy: var string; unit: static[string]) =
   stringy.add ' '
   when len(unit) > 0:
@@ -53,8 +59,8 @@ func bytes2human*(integer_bytes: int64): HumanBytes =
 
   # Build a human friendly bytes string with frequent bytes units.
   var bytesParts: array[8, string]
-  var humanBytesShort = ""
-  var thisByteUnit = ""
+  var humanBytesShort = newStringOfCap(wordsToCap(2))
+  var thisByteUnit = newStringOfCap(wordsToCap(16)) # 8 * 2
   if unlikely(zetta > 0):
     thisByteUnit = $zetta
     abytes(thisByteUnit, "Zetta")
