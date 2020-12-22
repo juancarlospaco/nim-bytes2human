@@ -6,8 +6,21 @@ type HumanBytes* = tuple[human: string, short: string,
                         units: HumanFriendlyByteUnits] ## Tuple of Human Friendly Byte Units as Strings.
 
 
-template divmod(a, b: SomeInteger): array[0..1, int] =
+template divmod(a, b: SomeInteger): array[2, int] =
   [int(int(a) / int(b)), int(a mod b)]
+
+
+template abytes(stringy: var string; unit: static[string]) =
+  stringy.add ' '
+  when len(unit) > 0:
+    stringy.add unit # "SOMETHINGbytes"
+    stringy.add 'b'
+  else:
+    stringy.add 'B'  # Just "Bytes"
+  stringy.add 'y'
+  stringy.add 't'
+  stringy.add 'e'
+  stringy.add 's'
 
 
 func join(a: array[8, string]): string {.inline, noinit.} =
@@ -39,58 +52,59 @@ func bytes2human*(integer_bytes: int64): HumanBytes =
   (yotta, zetta) = divmod(zetta, int64(1_024))
 
   # Build a human friendly bytes string with frequent bytes units.
-  var bytes_parts: array[8, string]
-  var human_bytes_short = ""
-  var this_byte_unit = ""
+  var bytesParts: array[8, string]
+  var humanBytesShort = ""
+  var thisByteUnit = ""
   if unlikely(zetta > 0):
-    this_byte_unit = $zetta
-    this_byte_unit.add " Zettabytes"
-    if human_bytes_short.len == 0:
-      human_bytes_short = this_byte_unit
-    bytes_parts[0] = this_byte_unit
+    thisByteUnit = $zetta
+    abytes(thisByteUnit, "Zetta")
+    if humanBytesShort.len == 0:
+      humanBytesShort = thisByteUnit
+    bytesParts[0] = thisByteUnit
   if unlikely(exa > 0):
-    this_byte_unit = $exa
-    this_byte_unit.add " Exabytes"
-    if human_bytes_short.len == 0:
-      human_bytes_short = this_byte_unit
-    bytes_parts[1] = this_byte_unit
+    thisByteUnit = $exa
+    abytes(thisByteUnit, "Exa")
+    if humanBytesShort.len == 0:
+      humanBytesShort = thisByteUnit
+    bytesParts[1] = thisByteUnit
   if unlikely(peta > 0):
-    this_byte_unit = $peta
-    this_byte_unit.add " Petabytes"
-    if human_bytes_short.len == 0:
-      human_bytes_short = this_byte_unit
-    bytes_parts[2] = this_byte_unit
+    thisByteUnit = $peta
+    abytes(thisByteUnit, "Peta")
+    if humanBytesShort.len == 0:
+      humanBytesShort = thisByteUnit
+    bytesParts[2] = thisByteUnit
   if tera > 0:
-    this_byte_unit = $tera
-    this_byte_unit.add " Terabytes"
-    if human_bytes_short.len == 0:
-      human_bytes_short = this_byte_unit
-    bytes_parts[3] = this_byte_unit
+    thisByteUnit = $tera
+    abytes(thisByteUnit, "Tera")
+    if humanBytesShort.len == 0:
+      humanBytesShort = thisByteUnit
+    bytesParts[3] = thisByteUnit
   if giga > 0:
-    this_byte_unit = $giga
-    this_byte_unit.add " Gigabytes"
-    if human_bytes_short.len == 0:
-      human_bytes_short = this_byte_unit
-    bytes_parts[4] = this_byte_unit
+    thisByteUnit = $giga
+    abytes(thisByteUnit, "Giga")
+    if humanBytesShort.len == 0:
+      humanBytesShort = thisByteUnit
+    bytesParts[4] = thisByteUnit
   if mega > 0:
-    this_byte_unit = $mega
-    this_byte_unit.add " Megabytes"
-    if human_bytes_short.len == 0:
-      human_bytes_short = this_byte_unit
-    bytes_parts[5] = this_byte_unit
+    thisByteUnit = $mega
+    abytes(thisByteUnit, "Mega")
+    if humanBytesShort.len == 0:
+      humanBytesShort = thisByteUnit
+    bytesParts[5] = thisByteUnit
   if kilo > 0:
-    this_byte_unit = $kilo
-    this_byte_unit.add " Kilobytes"
-    if human_bytes_short.len == 0:
-      human_bytes_short = this_byte_unit
-    bytes_parts[6] = this_byte_unit
-  if human_bytes_short.len == 0:
-    human_bytes_short = $bite
-    human_bytes_short.add " Bytes"
-  bytes_parts[7] = $bite & " Bytes"
+    thisByteUnit = $kilo
+    abytes(thisByteUnit, "Kilo")
+    if humanBytesShort.len == 0:
+      humanBytesShort = thisByteUnit
+    bytesParts[6] = thisByteUnit
+  if humanBytesShort.len == 0:
+    humanBytesShort = $bite
+    abytes(humanBytesShort, "")
+  bytesParts[7] = $bite
+  abytes(bytesParts[7], "")
 
   # The only way to make a Tuple Type without any extra temporary variable is cast
-  result = cast[HumanBytes]((human: bytes_parts.join, short: human_bytes_short,
+  result = cast[HumanBytes]((human: bytesParts.join, short: humanBytesShort,
     # Build a namedtuple with all named bytes units and all its integer values.
     units: cast[HumanFriendlyByteUnits]((
       bite: bite, kilo: kilo, mega: mega, giga: giga,
