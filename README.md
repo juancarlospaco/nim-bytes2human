@@ -4,7 +4,7 @@ Calculate all Byte units from integer bytes positive `int64`,
 with precision from Bytes to Yottabytes, and return a human friendly string representation.
 
 - Works with `--gc:arc`, `--gc:orc`, `--panics:on`, `--experimental:strictFuncs`, C, C++, JavaScript.
-- Uses `system.nim` only, does not import anything from stdlib.
+- Uses `system.nim` only, does not import anything from stdlib. Good performance.
 
 
 # Use
@@ -37,8 +37,7 @@ nimble install bytes2human
 
 # Documentation
 
-<details>
-    <summary><b>bytes2human()</b></summary>
+`bytes2human()`
 
 **Description:**
 Calculate Bytes, with precision from Bytes to Yottabytes.
@@ -49,5 +48,3 @@ The proc only accepts `int64`.
 - `integer_bytes` Bytes size, positive `int64` type, required.
 
 **Returns:** `HumanBytes` type, a tuple.
-
-</details>
