@@ -10,7 +10,7 @@ template divmod(a, b: SomeInteger): array[0..1, int] =
   [int(int(a) / int(b)), int(a mod b)]
 
 
-func join(a: array[8, string]): string {.inline.} =
+func join(a: array[8, string]): string {.inline, noinit.} =
   result = newStringOfCap( # 7 times " " + 8 times len(string)
     7 + a[0].len + a[1].len + a[2].len + a[3].len + a[4].len + a[5].len + a[6].len + a[7].len)
   if a[0].len > 0: result.add a[0] & ' '
@@ -28,7 +28,7 @@ func bytes2human*(integer_bytes: int64): HumanBytes =
   ## Calculate all Byte units from integer_bytes positive integer.
   assert integer_bytes >= 0, "Invalid Negative value for integer_bytes."
 
-  var bite, kilo, mega, giga, tera, peta, exa, zetta, yotta {.noInit.}: int64
+  var bite, kilo, mega, giga, tera, peta, exa, zetta, yotta {.noinit.}: int64
   (kilo, bite) = divmod(integer_bytes, int64(1_024))
   (mega, kilo) = divmod(kilo, int64(1_024))
   (giga, mega) = divmod(mega, int64(1_024))
@@ -43,42 +43,50 @@ func bytes2human*(integer_bytes: int64): HumanBytes =
   var human_bytes_short = ""
   var this_byte_unit = ""
   if unlikely(zetta > 0):
-    this_byte_unit = $zetta & " Zettabytes"
+    this_byte_unit = $zetta
+    this_byte_unit.add " Zettabytes"
     if human_bytes_short.len == 0:
       human_bytes_short = this_byte_unit
     bytes_parts[0] = this_byte_unit
   if unlikely(exa > 0):
-    this_byte_unit = $exa & " Exabytes"
+    this_byte_unit = $exa
+    this_byte_unit.add " Exabytes"
     if human_bytes_short.len == 0:
       human_bytes_short = this_byte_unit
     bytes_parts[1] = this_byte_unit
   if unlikely(peta > 0):
-    this_byte_unit = $peta & " Petabytes"
+    this_byte_unit = $peta
+    this_byte_unit.add " Petabytes"
     if human_bytes_short.len == 0:
       human_bytes_short = this_byte_unit
     bytes_parts[2] = this_byte_unit
   if tera > 0:
-    this_byte_unit = $tera & " Terabytes"
+    this_byte_unit = $tera
+    this_byte_unit.add " Terabytes"
     if human_bytes_short.len == 0:
       human_bytes_short = this_byte_unit
     bytes_parts[3] = this_byte_unit
   if giga > 0:
-    this_byte_unit = $giga & " Gigabytes"
+    this_byte_unit = $giga
+    this_byte_unit.add " Gigabytes"
     if human_bytes_short.len == 0:
       human_bytes_short = this_byte_unit
     bytes_parts[4] = this_byte_unit
   if mega > 0:
-    this_byte_unit = $mega & " Megabytes"
+    this_byte_unit = $mega
+    this_byte_unit.add " Megabytes"
     if human_bytes_short.len == 0:
       human_bytes_short = this_byte_unit
     bytes_parts[5] = this_byte_unit
   if kilo > 0:
-    this_byte_unit = $kilo & " Kilobytes"
+    this_byte_unit = $kilo
+    this_byte_unit.add " Kilobytes"
     if human_bytes_short.len == 0:
       human_bytes_short = this_byte_unit
     bytes_parts[6] = this_byte_unit
   if human_bytes_short.len == 0:
-    human_bytes_short = $bite & " Bytes"
+    human_bytes_short = $bite
+    human_bytes_short.add " Bytes"
   bytes_parts[7] = $bite & " Bytes"
 
   # The only way to make a Tuple Type without any extra temporary variable is cast
