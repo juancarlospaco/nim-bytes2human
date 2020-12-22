@@ -12,7 +12,7 @@ template divmod(a, b: SomeInteger): array[2, int] =
 
 template wordsToCap(wordCount: static[Positive]): static[int] =
   ## Average length of words, World 9, English 6 (Wikipedia, Wolfram, Oxford).
-  ## (9 * wordCount) + (whitespace * wordCount)
+  ## (9*wordCount)+(whitespace*wordCount) http://ravi.io/language-word-lengths
   (9 * wordCount) + wordCount  # Still better than a random guess.
 
 
