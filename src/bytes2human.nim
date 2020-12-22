@@ -13,13 +13,13 @@ template divmod(a, b: SomeInteger): array[0..1, int] =
 func join(a: array[8, string]): string {.inline.} =
   result = newStringOfCap( # 7 times " " + 8 times len(string)
     7 + a[0].len + a[1].len + a[2].len + a[3].len + a[4].len + a[5].len + a[6].len + a[7].len)
-  if a[0].len > 0: result.add a[0] & " "
-  if a[1].len > 0: result.add a[1] & " "
-  if a[2].len > 0: result.add a[2] & " "
-  if a[3].len > 0: result.add a[3] & " "
-  if a[4].len > 0: result.add a[4] & " "
-  if a[5].len > 0: result.add a[5] & " "
-  if a[6].len > 0: result.add a[6] & " "
+  if a[0].len > 0: result.add a[0] & ' '
+  if a[1].len > 0: result.add a[1] & ' '
+  if a[2].len > 0: result.add a[2] & ' '
+  if a[3].len > 0: result.add a[3] & ' '
+  if a[4].len > 0: result.add a[4] & ' '
+  if a[5].len > 0: result.add a[5] & ' '
+  if a[6].len > 0: result.add a[6] & ' '
   if a[7].len > 0: result.add a[7]
 
 
