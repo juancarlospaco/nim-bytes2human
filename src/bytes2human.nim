@@ -109,9 +109,7 @@ func bytes2human*(integer_bytes: int64): HumanBytes =
   bytesParts[7] = $bite
   abytes(bytesParts[7], "")
 
-  # The only way to make a Tuple Type without any extra temporary variable is cast
   result = HumanBytes((human: bytesParts.join, short: humanBytesShort,
-    # Build a namedtuple with all named bytes units and all its integer values.
     units: HumanFriendlyByteUnits((
       bite: bite, kilo: kilo, mega: mega, giga: giga,
       tera: tera, peta: peta, exa: exa, zetta: zetta
